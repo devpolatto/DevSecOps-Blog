@@ -10,7 +10,7 @@ description: DevSecOps e Cloud Architecture
 Profissional de DevSecOps e Arquitetura em Nuvem com experiência em infraestrutura, automação e desenvolvimento de software, especializado em AWS. Proficiência em Infraestrutura como Código (IaC) usando AWS CDK com TypeScript, pipelines de CI/CD e automação com Python e Bash.
 
 
-![My Skills](https://skillicons.dev/icons?i=aws,azure,terraform,docker,kubernetes,elasticsearch,kafka,githubactions,grafana,prometheus,kafka,linux,nginx,mongodb,postgres&perline=10)
+![My Skills](https://skillicons.dev/icons?i=aws,azure,terraform,docker,kubernetes,elasticsearch,kafka,githubactions,grafana,prometheus,kafka,linux,nginx,mongodb,postgres,bash,py,js,ts&perline=10)
 
 <div style="text-align:left;">
 	<a href="https://www.credly.com/badges/2e67c3b9-5f17-4d3d-8fdc-a57b418eccf0/linked_in?t=revq83">
