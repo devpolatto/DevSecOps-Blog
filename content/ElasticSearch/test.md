@@ -1,6 +1,7 @@
 ---
 title: Elasticsearch
 tags: [elasticsearch, tutorial, search]
+enableToc: true
 ---
 
 This is a blank Quartz installation.
@@ -18,3 +19,10 @@ tfpe environments/global.tfvars \
 -target='module.repositories["Alexandria"].azuredevops_branch_policy_auto_reviewers.required_reviewers["Devops Reviewers"]' \
 ```
 
+## teste TOC
+
+Conteúdo do meu teste de TOC.
+
+### Teste de seção 1
+
+Conteúdo da seção 1.
