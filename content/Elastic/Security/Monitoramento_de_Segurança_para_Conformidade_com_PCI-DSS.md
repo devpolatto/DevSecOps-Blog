@@ -1,6 +1,12 @@
 ---
 title: Monitoramento de Segurança para Conformidade com PCI-DSS
-tags: [Elasticsearch, Security, Filebeat, Auditbeat, PCI-DSS, SIEM]
+tags:
+  - Elasticsearch
+  - Security
+  - Filebeat
+  - Auditbeat
+  - PCI-DSS
+  - SIEM
 enableToc: true
 ---
 
