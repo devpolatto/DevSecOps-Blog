@@ -1,5 +1,5 @@
 ---
-title: Comandos
+title: Daily commands
 tags:
   - Kubernets
 enableToc: true
