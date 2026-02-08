@@ -4,6 +4,31 @@ tags:
   - Kubernets
 enableToc: true
 ---
+
+# Recupera todos os recursos
+
+```shell
+kubectl get all -n marketplace
+```
+
+⚠️ Importante: kubectl get all não mostra tudo (ex: ConfigMaps, Secrets, Ingress).
+
+Listar absolutamente tudo no namespace
+
+```shell
+kubectl api-resources --verbs=list --namespaced -o name \
+  | xargs -n 1 kubectl get -n <namespace> --ignore-not-found
+```
+
+Listar absolutamente tudo que tiver a label app=*
+
+```shell
+kubectl get $(
+  kubectl api-resources --namespaced -o name \
+  | paste -sd "," -
+) -n admin -l app=admin-api-hub-app
+```
+
 # Get Pod
 
 ```shell
