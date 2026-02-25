@@ -359,7 +359,15 @@ az network dns record-set cname create \
 --ttl 3600
 ```
 
+# AKS
 
+```shell
+az aks show \
+--subscription $ACQIO_PROD \
+  --resource-group prod-uswe2-general-k8s-rg \
+  --name prod-uswe2-general-k8s-aks \
+  --query "networkProfile.loadBalancerProfile.effectiveOutboundIPs[].id" -o tsv
+```
 
 # Azure Query
 ## Verifica discos não vinculados a uma VM
