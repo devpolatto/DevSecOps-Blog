@@ -1,7 +1,7 @@
 ---
 title: Falha de CORS ao acessar um serviço exposto pelo Istio
 tags:
-  - Kubernets
+  - Kubernetes
   - Istio
   - CORS
   - VirtualService
@@ -38,7 +38,7 @@ Adição da linha `allowCredentials: true` no corsPolicy do VirtualService admin
 
      ```txt
      PATCH /api/users/useradminaccount/{id}/useradminroleids undefined
-     Host: admin-api-hub.admin.acqio.net
+     Host: admin-api-hub.admin.domain.net
      User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:147.0) Gecko/20100101 Firefox/147.0
      Accept: application/json, text/plain, */*
      Accept-Language: en-US,en;q=0.9
@@ -49,9 +49,9 @@ Adição da linha `allowCredentials: true` no corsPolicy do VirtualService admin
      Access-Control-Allow-Headers: Authorization
      Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, PATCH, DELETE
      Content-Length: 127
-     Origin: https://agenty.acqio.net
+     Origin: https://agenty.domain.net
      Connection: keep-alive
-     Referer: https://agenty.acqio.net/
+     Referer: https://agenty.domain.net/
      Sec-Fetch-Dest: empty
      Sec-Fetch-Mode: cors
      Sec-Fetch-Site: same-site
@@ -59,15 +59,15 @@ Adição da linha `allowCredentials: true` no corsPolicy do VirtualService admin
 
      ```txt
      OPTIONS /api/users/useradminaccount/{id}/useradminroleids HTTP/2
-     Host: admin-api-hub.admin.acqio.net
+     Host: admin-api-hub.admin.domain.net
      User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:147.0) Gecko/20100101 Firefox/147.0
      Accept: */*
      Accept-Language: en-US,en;q=0.9
      Accept-Encoding: gzip, deflate, br, zstd
      Access-Control-Request-Method: PATCH
      Access-Control-Request-Headers: access-control-allow-headers,access-control-allow-methods,access-control-allow-origin,authorization,content-type
-     Referer: https://agenty.acqio.net/
-     Origin: https://agenty.acqio.net
+     Referer: https://agenty.domain.net/
+     Origin: https://agenty.domain.net
      Connection: keep-alive
      Sec-Fetch-Dest: empty
      Sec-Fetch-Mode: cors
@@ -85,15 +85,15 @@ Adição da linha `allowCredentials: true` no corsPolicy do VirtualService admin
      - Requeste GET rejeitada com 401 Unauthorized (response_code_details: ext_authz_denied). A flag reforça que a requisição foi negada. Isso sugere que a requisição não atendeu os critérios de autorização definidos.
 
      ```json
-     {"route_name":null,"authority":"admin-api-hub.admin.acqio.net","request_id":"4eb2389f-79ee-4632-8869-63c3faad120e","upstream_local_address":null,"method":"GET","response_code":401,"protocol":"HTTP/2","start_time":"2026-02-20T13:55:15.080Z","bytes_sent":0,"duration":9,"upstream_cluster":"inbound|50051||","bytes_received":0,"response_flags":"UAEX","downstream_remote_address":"52.123.190.124:0","connection_termination_details":null,"path":"/api/users/useradminaccount/{id}/useradminroleids","user_agent":null,"requested_server_name":"outbound_.50051_._.admin-api-hub-svc.admin.svc.cluster.local","upstream_service_time":null,"downstream_local_address":"10.26.0.250:50051","upstream_host":null,"upstream_transport_failure_reason":null,"x_forwarded_for":"52.123.190.124","response_code_details":"ext_authz_denied"}
+     {"route_name":null,"authority":"admin-api-hub.admin.domain.net","request_id":"4eb2389f-79ee-4632-8869-63c3faad120e","upstream_local_address":null,"method":"GET","response_code":401,"protocol":"HTTP/2","start_time":"2026-02-20T13:55:15.080Z","bytes_sent":0,"duration":9,"upstream_cluster":"inbound|50051||","bytes_received":0,"response_flags":"UAEX","downstream_remote_address":"52.123.190.124:0","connection_termination_details":null,"path":"/api/users/useradminaccount/{id}/useradminroleids","user_agent":null,"requested_server_name":"outbound_.50051_._.admin-api-hub-svc.admin.svc.cluster.local","upstream_service_time":null,"downstream_local_address":"10.26.0.250:50051","upstream_host":null,"upstream_transport_failure_reason":null,"x_forwarded_for":"52.123.190.124","response_code_details":"ext_authz_denied"}
      ```
 
      ```json
-     {"path":"/api/users/useradminaccount/<id>/useradminroleids","request_id":"a770f46f-4720-40c2-895a-d0a18035a796","response_code_details":"ext_authz_denied","upstream_transport_failure_reason":null,"duration":4,"upstream_host":null,"route_name":null,"x_forwarded_for":"52.123.190.124","requested_server_name":"outbound_.50051_._.admin-api-hub-svc.admin.svc.cluster.local","response_code":401,"downstream_local_address":"10.26.0.250:50051","method":"GET","authority":"admin-api-hub.admin.acqio.net","upstream_local_address":null,"bytes_sent":0,"protocol":"HTTP/2","start_time":"2026-02-20T13:55:14.115Z","user_agent":"Mozilla/5.0 (Windows NT 6.1; WOW64) SkypeUriPreview Preview/0.5 skype-url-preview@microsoft.com","downstream_remote_address":"52.123.190.124:0","upstream_service_time":null,"bytes_received":0,"response_flags":"UAEX","upstream_cluster":"inbound|50051||","connection_termination_details":null}
+     {"path":"/api/users/useradminaccount/<id>/useradminroleids","request_id":"a770f46f-4720-40c2-895a-d0a18035a796","response_code_details":"ext_authz_denied","upstream_transport_failure_reason":null,"duration":4,"upstream_host":null,"route_name":null,"x_forwarded_for":"52.123.190.124","requested_server_name":"outbound_.50051_._.admin-api-hub-svc.admin.svc.cluster.local","response_code":401,"downstream_local_address":"10.26.0.250:50051","method":"GET","authority":"admin-api-hub.admin.domain.net","upstream_local_address":null,"bytes_sent":0,"protocol":"HTTP/2","start_time":"2026-02-20T13:55:14.115Z","user_agent":"Mozilla/5.0 (Windows NT 6.1; WOW64) SkypeUriPreview Preview/0.5 skype-url-preview@microsoft.com","downstream_remote_address":"52.123.190.124:0","upstream_service_time":null,"bytes_received":0,"response_flags":"UAEX","upstream_cluster":"inbound|50051||","connection_termination_details":null}
      ```
 
      ```json
-     {"connection_termination_details":null,"bytes_sent":289,"upstream_transport_failure_reason":null,"upstream_service_time":"37","downstream_local_address":"10.26.0.250:50051","request_id":"d4740cb1-3966-4c41-82be-f68613bd72bf","bytes_received":57,"upstream_host":"10.26.0.250:50051","downstream_remote_address":"170.78.98.38:0","start_time":"2026-02-20T14:27:44.533Z","user_agent":"PostmanRuntime/7.49.1","response_code_details":"via_upstream","duration":87,"authority":"admin-api-hub.admin.acqio.net","route_name":"default","upstream_local_address":"127.0.0.6:58433","upstream_cluster":"inbound|50051||","protocol":"HTTP/2","method":"POST","path":"/api/users/useradminaccount/<id>/useradminroleids","x_forwarded_for":"170.78.98.38","response_flags":"-","requested_server_name":"outbound_.50051_._.admin-api-hub-svc.admin.svc.cluster.local","response_code":200}
+     {"connection_termination_details":null,"bytes_sent":289,"upstream_transport_failure_reason":null,"upstream_service_time":"37","downstream_local_address":"10.26.0.250:50051","request_id":"d4740cb1-3966-4c41-82be-f68613bd72bf","bytes_received":57,"upstream_host":"10.26.0.250:50051","downstream_remote_address":"170.78.98.38:0","start_time":"2026-02-20T14:27:44.533Z","user_agent":"PostmanRuntime/7.49.1","response_code_details":"via_upstream","duration":87,"authority":"admin-api-hub.admin.domain.net","route_name":"default","upstream_local_address":"127.0.0.6:58433","upstream_cluster":"inbound|50051||","protocol":"HTTP/2","method":"POST","path":"/api/users/useradminaccount/<id>/useradminroleids","x_forwarded_for":"170.78.98.38","response_flags":"-","requested_server_name":"outbound_.50051_._.admin-api-hub-svc.admin.svc.cluster.local","response_code":200}
      ```
 
 3. **Configurações do Deployment, VirtualService, etc.**
@@ -138,7 +138,7 @@ Adição da linha `allowCredentials: true` no corsPolicy do VirtualService admin
                - '--log_output_level=default:info'
      containers:
           - name: admin-api-hub-ctn
-          image: devacqio.azurecr.io/admin/admin-api-hub:********
+          image: devdomain.azurecr.io/admin/admin-api-hub:********
           args:
                - '--port=50051'
                - >-
@@ -200,7 +200,7 @@ Adição da linha `allowCredentials: true` no corsPolicy do VirtualService admin
           gateways:
           - istio-system/istio-gateway-default
           hosts:
-          - admin-api-hub.admin.acqio.net
+          - admin-api-hub.admin.domain.net
           http:
           - corsPolicy:
                allowHeaders:
@@ -226,7 +226,7 @@ Adição da linha `allowCredentials: true` no corsPolicy do VirtualService admin
                     - PUT
                     - OPTIONS
                allowOrigins:
-                    - exact: https://agenty.acqio.net
+                    - exact: https://agenty.domain.net
                exposeHeaders:
                     - grpc-status
                     - grpc-message
@@ -243,7 +243,7 @@ Adição da linha `allowCredentials: true` no corsPolicy do VirtualService admin
      ```
 
      - Metodos permitidos: GET, POST, PUT, DELETE, OPTIONS
-     - Allow-Origin: https://agenty.acqio.net (exato, sem wildcard)
+     - Allow-Origin: https://agenty.domain.net (exato, sem wildcard)
      - Allow-Headers: Authorization, Content-Type, etc.
      - Expose-Headers: grpc-status, grpc-message (obrigatório para gRPC-Web)
      - Metodo OPTIONS (preflight) é tratado automaticamente pelo Envoy do Gateway, que devolve os headers CORS sem encaminhar para o pod. Já os métodos reais (GET/POST/PUT/etc.) são roteados para o Service admin-api-hub-svc:50051.
@@ -268,14 +268,14 @@ Adição da linha `allowCredentials: true` no corsPolicy do VirtualService admin
 
      1. Cliente (Browser) → Internet
 
-          - O frontend em https://agenty.acqio.net faz uma chamada gRPC-Web.
+          - O frontend em https://agenty.domain.net faz uma chamada gRPC-Web.
           gRPC-Web = gRPC “disfarçado” de HTTP (normalmente POST + headers especiais: x-grpc-web, grpc-timeout, content-type: application/grpc-web+proto, etc.).
 
-          - O browser aponta para: https://admin-api-hub.admin.acqio.net/...
+          - O browser aponta para: https://admin-api-hub.admin.domain.net/...
 
      2. DNS + Load Balancer Externo
 
-          - DNS resolve admin-api-hub.admin.acqio.net → IP público do Istio Ingress Gateway.
+          - DNS resolve admin-api-hub.admin.domain.net → IP público do Istio Ingress Gateway.
           - O Azure Load Balancer entrega na porta 443 (HTTPS) do Gateway.
 
      3. Istio Ingress Gateway (o “Ingress” do Istio)
@@ -283,13 +283,13 @@ Adição da linha `allowCredentials: true` no corsPolicy do VirtualService admin
           - É um Envoy rodando no namespace istio-system (pod istio-ingressgateway-xxx).
           - Ele tem um recurso Gateway (istio-system/istio-gateway-default).
           - Esse Gateway define: porta 443, TLS, hosts permitidos, etc.
-          - O Gateway recebe a requisição e procura qual VirtualService casa com o host admin-api-hub.admin.acqio.net.
+          - O Gateway recebe a requisição e procura qual VirtualService casa com o host admin-api-hub.admin.domain.net.
 
      4. VirtualService entra em ação (sua config)
 
-          - hosts: - admin-api-hub.admin.acqio.net
+          - hosts: - admin-api-hub.admin.domain.net
           - corsPolicy → se for OPTIONS (preflight), o Gateway responde imediatamente (sem ir pro pod). Ele devolve:
-               - Access-Control-Allow-Origin: https://agenty.acqio.net
+               - Access-Control-Allow-Origin: https://agenty.domain.net
                - Access-Control-Allow-Methods, Allow-Headers, exposeHeaders: grpc-status, grpc-message, etc.
           
           - Se for requisição real (GET/POST/PUT/etc.), o VirtualService faz route para admin-api-hub-svc:50051.
@@ -340,7 +340,7 @@ Alteração realizada no VirtualService admin-api-hub-vs (namespace admin):
 http:
 - corsPolicy:
     allowOrigins:
-    - exact: https://agenty.acqio.net
+    - exact: https://agenty.domain.net
     allowMethods:
     - DELETE
     - POST
@@ -394,10 +394,10 @@ spec:
 - Erro de CORS no browser é frequentemente máscara de outro erro (401/403/500) que acontece no preflight.
 - Quando um endpoint específico falha e os demais funcionam → quase sempre é diferença entre “com preflight” (POST/PUT/PATCH) vs “sem preflight” (GET simples).
 - `allowCredentials: true` é obrigatório sempre que o frontend envia `Authorization: Bearer`.
--  O CORS definido no VirtualService é global para todas as rotas que correspondem ao host, nesse caso, o https://admin-api-hub.admin.acqio.net, não é possível ter regras de CORS diferentes para endpoints diferentes dentro do mesmo host. Se for necessário ter políticas de CORS distintas, seria necessário criar VirtualServices separados com hosts diferentes ou usar outras técnicas de roteamento.
+-  O CORS definido no VirtualService é global para todas as rotas que correspondem ao host, nesse caso, o https://admin-api-hub.admin.domain.net, não é possível ter regras de CORS diferentes para endpoints diferentes dentro do mesmo host. Se for necessário ter políticas de CORS distintas, seria necessário criar VirtualServices separados com hosts diferentes ou usar outras técnicas de roteamento.
 - O preflight (ou "requisição de verificação prévia") é um mecanismo de segurança do navegador (Chrome, Firefox, Edge, etc.) que faz parte da especificação CORS (Cross-Origin Resource Sharing).<br/><br/>
 
-     Quando o frontend (ex: https://agenty.acqio.net) quer fazer uma requisição para um domínio diferente (ex: https://admin-api-hub.admin.acqio.net), o navegador não envia diretamente a requisição "real" (o seu PATCH, POST, etc.). Em vez disso, ele primeiro envia uma requisição automática para "perguntar ao servidor se é permitido fazer isso".
+     Quando o frontend (ex: https://agenty.domain.net) quer fazer uma requisição para um domínio diferente (ex: https://admin-api-hub.admin.domain.net), o navegador não envia diretamente a requisição "real" (o seu PATCH, POST, etc.). Em vez disso, ele primeiro envia uma requisição automática para "perguntar ao servidor se é permitido fazer isso".
      <br/><br/>
      Essa requisição de "pergunta" é chamada de preflight e sempre usa o método HTTP OPTIONS.
      <br/><br/>
@@ -424,8 +424,8 @@ spec:
      
      ```txt
      OPTIONS /api/users/useradminaccount/.../useradminroleids HTTP/2
-     Host: admin-api-hub.admin.acqio.net
-     Origin: https://agenty.acqio.net
+     Host: admin-api-hub.admin.domain.net
+     Origin: https://agenty.domain.net
      Access-Control-Request-Method: PATCH
      Access-Control-Request-Headers: authorization,content-type,...
      ```
@@ -434,7 +434,7 @@ spec:
 
      - Status 200 (ou 204) se permitir
      - Headers obrigatórios:
-          - Access-Control-Allow-Origin: https://agenty.acqio.net (ou *)
+          - Access-Control-Allow-Origin: https://agenty.domain.net (ou *)
           - Access-Control-Allow-Methods: PATCH, POST, GET, ...
           - Access-Control-Allow-Headers: authorization, content-type, ...
           - Access-Control-Allow-Credentials: true (se precisar de token/cookies)<br/>
