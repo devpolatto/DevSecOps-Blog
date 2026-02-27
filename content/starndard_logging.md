@@ -22,7 +22,7 @@ Todas as linhas de log DEVEM ser um JSON único com no mínimo os seguintes camp
   "@timestamp": "2025-12-01T11:30:14.058Z",     // ISO 8601 com milissegundos e timezone Z (obrigatório)
   "level": "INFO" | "WARN" | "ERROR" | "DEBUG" | "TRACE",  // Sempre presente e MAIÚSCULO (obrigatório)
   "thread": "32080" | "http-nio-8080-exec-1" | etc,        // nome ou id da thread (Opcional)
-  "logger": "com.acqio.acquiring.capture.ecommerceservice.EcommerceServiceImpl", // nome completo da classe (Java) ou módulo (NodeJS, Python, etc) que gerou o log (obrigatório)
+  "logger": "com.busines.acquiring.capture.ecommerceservice.EcommerceServiceImpl", // nome completo da classe (Java) ou módulo (NodeJS, Python, etc) que gerou o log (obrigatório)
   "service": "acquiring-ecommerce",                // nome curto do serviço/microserviço (Obrigatório se não for hospedado no Kubernetes)
   "environment": "prod" | "hml" | "dev",           // Opcional, mas recomendado
   "trace_id": "787a5a47-604d-4a27-99cc-5e36bf25873b",   // correlation ID / trace_id (OpenTelemetry, MDC, Elastic APM) (Necessário para rastreamento distribuído em que a intrumentação esteja em modo manual)
@@ -64,7 +64,7 @@ Caategria|Quando usar|Exemplos|
   "@timestamp": "2025-12-01T11:30:14.058Z",
   "level": "INFO",
   "thread": "http-nio-8080-exec-1",
-  "logger": "com.acqio.acquiring.capture.ecommerceservice.EcommerceServiceImpl",
+  "logger": "com.busines.acquiring.capture.ecommerceservice.EcommerceServiceImpl",
   "service": "acquiring-ecommerce",
   "environment": "prod",
   "trace_id": "787a5a47-604d-4a27-99cc-5e36bf25873b",
@@ -85,7 +85,7 @@ O Examplo acima mostra um log de sucesso para uma transação de autorização d
      "@timestamp": "2025-12-01T11:30:14.058Z",
      "level": "INFO",
      "thread": "http-nio-8080-exec-1",
-     "logger": "com.acqio.acquiring.capture.ecommerceservice.EcommerceServiceImpl",
+     "logger": "com.busines.acquiring.capture.ecommerceservice.EcommerceServiceImpl",
      "service": "acquiring-ecommerce",
      "environment": "prod",
      "trace_id": "787a5a47-604d-4a27-99cc-5e36bf25873b",
@@ -121,7 +121,7 @@ Segue exemplo de logs que o elastic não vai conseguir mapear automaticamente:
      "@timestamp":"2025-12-01T18:10:49.579Z",
      "thread":2623,
      "level":"SEVERE",
-     "message":"CancelRentalSubscription-eeadf6b0-1644-45ce-99b8-39b5fd06036d from request=device_number: "5901202450004202" store_document_number: "05099810977" franchisee_document_number: "29404922000146" status_for_inventory_update: DEVICE_INVENTORY_ITEM_STATUS_AVAILABLE",
+     "message":"CancelRentalSubscription-eeadf6b0-1644-45ce-99b8-39b5fd06036d from request=device_number: "******" store_document_number: "****" franchisee_document_number: "*****" status_for_inventory_update: DEVICE_INVENTORY_ITEM_STATUS_AVAILABLE",
      ...
 }
 ```
@@ -135,7 +135,7 @@ O campo message contem dados estruturado, mas não está em JSON. Se passarmos e
   "@timestamp": "2025-12-01T11:31:00.789Z",
   "level": "INFO",
   "thread": "QuartzScheduler-thread-1",
-  "logger": "com.acqio.acquiring.jobs.DailyReconciliationJob",
+  "logger": "com.busines.acquiring.jobs.DailyReconciliationJob",
   "service": "acquiring-ecommerce",
   "environment": "prod",
   "event": {
@@ -156,7 +156,7 @@ O campo message contem dados estruturado, mas não está em JSON. Se passarmos e
   "@timestamp": "2025-12-01T11:32:45.123Z",
   "level": "ERROR",
   "thread": "http-nio-8080-exec-5",
-  "logger": "com.acqio.acquiring.capture.paymentgateway.PaymentGatewayClient",
+  "logger": "com.busines.acquiring.capture.paymentgateway.PaymentGatewayClient",
   "service": "acquiring-ecommerce",
   "environment": "prod",
   "trace_id": "a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6",
@@ -169,7 +169,7 @@ O campo message contem dados estruturado, mas não está em JSON. Se passarmos e
   "error": { // campo adicional para detalhes do erro
     "type": "HttpTimeoutException",  // tipo ou classe do erro
     "message": "Timeout ao chamar a API do gateway de pagamento", // mensagem de erro
-    "stack_trace": "com.acqio.acquiring.capture.paymentgateway.PaymentGatewayClient.callPaymentGateway(PaymentGatewayClient.java:45)..." // stack trace completo ou parcial
+    "stack_trace": "com.busines.acquiring.capture(PaymentGatewayClient.java:45)..." // stack trace completo ou parcial
   },
   "message": "Falha ao chamar a API do gateway de pagamento"
 }
@@ -184,7 +184,7 @@ No exemplo acima, temos um log de erro que captura uma falha ao chamar uma API e
   "@timestamp": "2025-12-01T11:35:22.456Z",
   "level": "ERROR",
   "thread": "HikariPool-1-Connection-1",
-  "logger": "com.acqio.acquiring.database.DataSource",
+  "logger": "com.busines.acquiring.database.DataSource",
   "service": "acquiring-ecommerce",
   "environment": "prod",
   "trace_id": "z9y8x7w6-v5u4-t3s2-r1q0-p9o8n7m6l5k4",
@@ -197,7 +197,7 @@ No exemplo acima, temos um log de erro que captura uma falha ao chamar uma API e
   "error": {
     "type": "SQLException",
     "message": "Falha ao conectar ao banco de dados: timeout de conexão",
-    "stack_trace": "com.acqio.acquiring.database.DataSource.getConnection(DataSource.java:78)..." 
+    "stack_trace": "com.busines.acquiring.database.DataSource.getConnection(DataSource.java:78)..." 
   },
   "message": "Erro ao tentar conectar ao banco de dados"
 }

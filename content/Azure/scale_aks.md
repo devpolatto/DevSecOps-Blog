@@ -24,7 +24,7 @@ echo "Starting node count monitoring for node pool '$NODE_POOL_NAME' in cluster 
 while true; do
 
     NODE_COUNT=$(az aks nodepool show \
-     --subscription $ACQIO_PROD \
+     --subscription <subscription-id> \
      --resource-group "$RESOURCE_GROUP" \
      --cluster-name "$CLUSTER_NAME" \
      --name "$NODE_POOL_NAME" \
@@ -42,7 +42,7 @@ while true; do
     if [ "$NODE_COUNT" -eq 0 ]; then
         echo "$(date): Node count is 0. Scaling to $DESIRED_COUNT node(s)..."
         az aks nodepool scale \
-          --subscription $ACQIO_PROD \
+          --subscription <subscription-id> \
           --resource-group "$RESOURCE_GROUP" \
           --cluster-name "$CLUSTER_NAME" \
           --name "$NODE_POOL_NAME" \

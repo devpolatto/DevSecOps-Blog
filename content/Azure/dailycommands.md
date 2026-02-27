@@ -11,79 +11,77 @@ enableToc: true
 
 ```bash
 az role assignment create \
-  --assignee 3693889f-c718-4bce-bfa0-2a9b31e342eb \
+  --assignee <user-id> \
   --role Contributor \
-  --scope "/subscriptions/b57d722b-40b5-4749-b9f6-71be54d0a0c4/resourceGroups/prod-merchant-portal"
+  --scope "/subscriptions/<subscription-id>/resourceGroups/<resource-group>"
 ```
 
 # Disk
 
 ```
-az disk list --resource-group dev-westus2-sftp-poc-unmanaged-disk-rg
+az disk list --resource-group <resource-group>
 
-az disk show --resource-group dev-westus2-sftp-poc-unmanaged-disk-rg --disk-name dev-westus2-sftp-poc-unmanaged-disk-sftp-vm_osd_853055a4e91c4800986c68604b70ce5f
-
-az disk show --resource-group dev-westus2-sftp-poc-unmanaged-disk-rg --disk-name dev-westus2-sftp-poc-unmanaged-disk-sftp-vm_dev_ddd3ad22518948969939fc8d90f728d2
+az disk show --resource-group <resource-group> --disk-name <disk-name>
 ```
 
 # Network
 
 ## Subnet
 
-```
+```shell
 az network vnet subnet show \
-  --resource-group prod-useus2-IPCloud \
-  --vnet-name prod-useus2-IPCloud-vnet \
-  --name prod-useus2-IPCloud-snet
+  --resource-group <resource-group> \
+  --vnet-name <vnet-name> \
+  --name <subnet-name>
 ```
 
 ## Public IP
 
 ```shell
 az network public-ip list \
---subscription $ACQIO_PROD \
+--subscription <subscription-id> \
 --query "[?allocationMethod=='Static'].{Name:name, ResourceGroup:resourceGroup, Location:location, IPAddress:ipAddress, SKU:sku.name}" -o table
 
 
 az network public-ip list \
---subscription $ACQIO_PROD \
+--subscription $<subscription-id> \
 --query "[?sku.name=='Standard']" \
 -o table
 
 az network public-ip list \
---subscription $ACQIO_PROD \
+--subscription $<subscription-id> \
 --query "[?sku.name=='Basic'].{Name:name, ResourceGroup:resourceGroup, AllocationMethod:publicIPAllocationMethod, SKU:sku.name}" \
 -o table
 
 az network public-ip show \
---subscription $ACQIO_PROD \
---resource-group vpn-gateway \
---name vpn-gateway-ip
+--subscription <subscription-id> \
+--resource-group <resource-group> \
+--name <public-ip-name>
 ```
 
 # VPN Gateway
 
 ```shell
 az network vnet-gateway list \
-  --subscription $ACQIO_PROD_GATEWAY \
-  --resource-group vpn-gateway \
+  --subscription <subscription-id> \
+  --resource-group <resource-group> \
   --query "{IP_Gateway:[].ipConfigurations[].name}" \
   -o table
   
 az network vnet-gateway show \
---subscription $ACQIO_PROD_GATEWAY \
---resource-group vpn-gateway \
---name prodgtw-vpn-gateway
+--subscription <subscription-id> \
+--resource-group <resource-group> \
+--name <gateway-name>
 
 az network vnet-gateway show \
---subscription $ACQIO_PROD \
+--subscription $<subscription-id> \
 --resource-group vpn-gateway \
 --name prod-vpn-gateway \
 --query "bgpSettings.bgpPeeringAddresses[].{BGP:defaultBgpIpAddresses[0],Tunnel:tunnelIpAddresses[0]}" \
 -o table
 
 az network vnet-gateway list \
-  --subscription $ACQIO_PROD_GATEWAY \
+  --subscription $<subscription-id>_GATEWAY \
   --resource-group vpn-gateway \
   --query "[].ipConfigurations[].name" \
   -o table
@@ -93,24 +91,24 @@ az network vnet-gateway list \
 
 ```shell
 az network vpn-connection list \
---subscription $ACQIO_PROD_GATEWAY \
+--subscription $<subscription-id>_GATEWAY \
 --resource-group vpn-gateway
 
 az network vpn-connection list \
---subscription $ACQIO_DEV \
+--subscription <subscription-id> \
 --resource-group vpn-gateway \
 --query "[].{Name:name, ResourceGroup:resourceGroup}" \
 -o table
 
 az network vpn-connection show \
---subscription $ACQIO_PROD \
+--subscription $<subscription-id> \
 --resource-group vpn-gateway \
 --name 2rp \
 --query "{Name:name, Status:connectionStatus, LocalNetwork:trafficSelectorPolicies[0].localAddressRanges}" \
 -o table
 
 az network vpn-connection show \
-  --subscription $ACQIO_PROD_GATEWAY \
+  --subscription $<subscription-id>_GATEWAY \
   --resource-group vpn-gateway \
   --name redsys_fs \
   --query "{Tunnel:tunnelConnectionStatus[0].tunnel, Status:connectionStatus, LocalSubnet:trafficSelectorPolicies[0].localAddressRanges[0], RemoteSubnet:trafficSelectorPolicies[0].remoteAddressRanges[0]}" \
@@ -120,21 +118,21 @@ az network vpn-connection show \
 
 ```shell  
 az network vpn-connection create \
-    --subscription $ACQIO_PROD \
-    --name 2rp \
-    --resource-group vpn-gateway \
-    --location westus2 \
-    --vnet-gateway1 prod-vpn-gateway \
-    --local-gateway2 2rp \
-    --shared-key "5OoO@VhmSStSB5USkGq8@0U@YyLTjF%t" \
-    --enable-bgp false \
-    --express-route-gateway-bypass false \
-    --routing-weight 0 \
-    --use-policy-based-traffic-selectors false \
-    --tags environment=prod repository=spokane repository_path=infra/terraform/projects/vpn-gateway resource_group=vpn-gateway squad-team=devops subscription=prod-engineering terraform=true tribe=shared
+  --subscription <subscription-id> \
+  --name <connection-name> \
+  --resource-group <resource-group> \
+  --location <location> \
+  --vnet-gateway1 <vnet-gateway-name> \
+  --local-gateway2 <local-gateway-name> \
+  --shared-key <shared-key> \
+  --enable-bgp false \
+  --express-route-gateway-bypass false \
+  --routing-weight 0 \
+  --use-policy-based-traffic-selectors false \
+  --tags environment=prod repository=repo repository_path=infra/terraform/projects/vpn-gateway resource_group=vpn-gateway squad-team=devops subscription=prod-engineering terraform=true tribe=shared
     
 az network vpn-connection ipsec-policy add \
-    --subscription $ACQIO_PROD \
+    --subscription $<subscription-id> \
     --connection-name 2rp \
     --resource-group vpn-gateway \
     --dh-group DHGroup14 \
@@ -147,7 +145,7 @@ az network vpn-connection ipsec-policy add \
     --sa-max-size 0
     
 az network vpn-connection update \
-    --subscription $ACQIO_PROD \
+    --subscription $<subscription-id> \
     --name 2rp \
     --resource-group vpn-gateway \
     --set dpdTimeoutSeconds=10 \
@@ -161,14 +159,14 @@ az network vpn-connection update \
 
 ```shell
 az network local-gateway show \
-  --subscription $ACQIO_PROD_GATEWAY \
+  --subscription $<subscription-id>_GATEWAY \
   --resource-group vpn-gateway \
   --name redsys_fs \
   --query "{RemoteGatewayIPAddress:gatewayIpAddress, RemoteSubnet:localNetworkAddressSpace.addressPrefixes}" \
   -o json
 
 az network local-gateway show \
-  --subscription $ACQIO_PROD \
+  --subscription $<subscription-id> \
   --resource-group vpn-gateway \
   --name emprel \
   --query "{RemoteGatewayIPAddress:gatewayIpAddress, RemoteSubnet:localNetworkAddressSpace.addressPrefixes}" \
@@ -179,18 +177,18 @@ az network local-gateway show \
 
 ```shell
 az network vnet-gateway get-routes-information \
---subscription $ACQIO_PROD \
+--subscription $<subscription-id> \
 --resource-group vpn-gateway \
 --name prod-vpn-gateway
 
 az network vnet-gateway list-advertised-routes \
---subscription $ACQIO_PROD \
+--subscription $<subscription-id> \
 --resource-group vpn-gateway \
 --name prod-vpn-gateway \
 --peer 10.254.254.4
 
 az network vnet-gateway list-learned-routes \
-  --subscription $ACQIO_PROD \
+  --subscription $<subscription-id> \
   --resource-group vpn-gateway \
   --name prod-vpn-gateway \
   --query "value[?network=='172.21.0.0/18' || network=='192.168.0.0/16'].
@@ -208,9 +206,9 @@ az network vnet-gateway list-learned-routes \
 
 ```bash
 az storage account show \
---subscription $ACQIO_PROD \
---name prodbracquirersftpvmsa \
---resource-group prod-br-acquirer-rg
+--subscription <subscription-id> \
+--name <storage-account-name> \
+--resource-group <resource-group>
 ```
 
 ## Blob
@@ -219,16 +217,16 @@ az storage account show \
 az storage blob upload-batch \
 -s dist \
 -d \$web \
---account-name prodmerchantportalnv \
---subscription b57d722b-40b5-4749-b9f6-71be54d0a0c4 \
+--account-name <storage-account-name> \
+--subscription <subscription-id> \
 --overwrite true
 ```
 ## Files
 
 ```bash
 az storage file list \
---account-name prodbracquirersftpvmsa \
---share-namec sftp
+--account-name <storage-account-name> \
+--share-name <share-name>
 ```
 
 ### Local user
@@ -236,19 +234,19 @@ az storage file list \
 
 ```shell
 az storage account local-user list-keys \
---subscription $ACQIO_TEST \
---resource-group dev-test-uswe2-Private-endpoint \
---name sftpuser \
---account-name testsftpstorage2025 \
+--subscription <subscription-id> \
+--resource-group <resource-group> \
+--name <local-user-name> \
+--account-name <storage-account-name> \
 --query sshPassword
 ```
 
 ```bash
 az storage account local-user show \
---subscription $ACQIO_TEST \
---resource-group dev-test-uswe2-Private-endpoint \
---account-name testsftpstorage2025 \
---name sftpuser
+--subscription <subscription-id> \
+--resource-group <resource-group> \
+--account-name <storage-account-name> \
+--name <local-user-name>
 ```
 # Frontdoor
 
@@ -256,37 +254,37 @@ az storage account local-user show \
 
 ```bash
 az afd profile list \
---subscription $ACQIO_PROD \
---resource-group prod-merchant-portal
+--subscription <subscription-id> \
+--resource-group <resource-group>
 ```
 
 ## Endpoint
 
 ```bash
 az afd endpoint list \
---subscription $ACQIO_PROD \
---resource-group prod-merchant-portal \
---profile-name prodmerchantportalnew
+--subscription <subscription-id> \
+--resource-group <resource-group> \
+--profile-name <profile-name>
 ```
 
 ## Route
 
 ```bash
 az afd route list \
---subscription $ACQIO_PROD \
---resource-group prod-merchant-portal \
---endpoint-name prodmerchantportalnew \
---profile-name prodmerchantportalnew
+--subscription <subscription-id> \
+--resource-group <resource-group> \
+--endpoint-name <endpoint-name> \
+--profile-name <profile-name>
 ```
 
 ## Purge Cache CDN
 
 ```bash
 az afd endpoint purge \
---subscription b57d722b-40b5-4749-b9f6-71be54d0a0c4 \
---resource-group prod-merchant-portal \
---profile-name prodmerchantportal \
---endpoint-name prodmerchantportal \
+--subscription <subscription-id> \
+--resource-group <resource-group> \
+--profile-name <profile-name> \
+--endpoint-name <endpoint-name> \
 --content-paths '/*'
 ```
 
@@ -294,23 +292,23 @@ az afd endpoint purge \
 
 ```bash
 az postgres flexible-server parameter set \
-  --resource-group <your-resource-group> \
-  --server-name prod-wus2-datahub-internal-dbfs-pgdb-new \
+  --resource-group <resource-group> \
+  --server-name <server-name> \
   --name azure.extensions \
   --value "pg_buffercache,pg_stat_statements" \
-  --subscription <your-subscription-id>
+  --subscription <subscription-id>
 ```
 
 # SQL Server
 
 ```shell
 az sql server firewall-rule create \
---subscription $ACQIO_PRODBACK \
---resource-group prod-br-tpv-rg \
---server  \
---name prod-br-tpv-acqio \
---start-ip-address 45.235.94.151 \
---end-ip-address 45.235.94.151
+--subscription <subscription-id> \
+--resource-group <resource-group> \
+--server <server-name> \
+--name <firewall-rule-name> \
+--start-ip-address <ip-address> \
+--end-ip-address <ip-address>
 ```
 
 # DNS
@@ -321,41 +319,41 @@ az sql server firewall-rule create \
 
 ```shell
 az network dns record-set a add-record \
---subscription $ACQIO_PROD \
---resource-group prod-global-dns-rg \
---zone-name acqio.com.br \
---record-set-name lojista \
+--subscription <subscription-id> \
+--resource-group <resource-group> \
+--zone-name <zone-name> \
+--record-set-name <record-set-name> \
 --ttl 3600 \
---ipv4-address 20.252.57.64
+--ipv4-address <ip-address>
 
 az network dns record-set a delete \
---subscription $ACQIO_PROD \
---resource-group prod-global-dns-rg \
---zone-name acqio.com.br \
---name lojista
+--subscription <subscription-id> \
+--resource-group <resource-group> \
+--zone-name <zone-name> \
+--name <record-set-name>
 ```
 
 ### CNAME
 
 ```shell
 az network dns record-set cname show \
---subscription $ACQIO_PROD \
---resource-group prod-global-dns-rg \
---zone-name acqio.com.br \
---name lojista
+--subscription <subscription-id> \
+--resource-group <resource-group> \
+--zone-name <zone-name> \
+--name <record-set-name>
 
 az network dns record-set cname delete \
---subscription $ACQIO_PROD \
---resource-group prod-global-dns-rg \
---zone-name acqio.com.br \
---name lojista
+--subscription <subscription-id> \
+--resource-group <resource-group> \
+--zone-name <zone-name> \
+--name <record-set-name>
 
 az network dns record-set cname create \
---subscription $ACQIO_PROD \
---resource-group prod-global-dns-rg \
---zone-name acqio.com.br \
---name lojista \
---target-resource "/subscriptions/b57d722b-40b5-4749-b9f6-71be54d0a0c4/resourceGroups/prod-merchant-portal/providers/Microsoft.Cdn/profiles/prodmerchantportalnew/afdendpoints/prodmerchantportalnew" \
+--subscription <subscription-id> \
+--resource-group <resource-group> \
+--zone-name <zone-name> \
+--name <record-set-name> \
+--target-resource "/subscriptions/<subscription-id>/resourceGroups/<resource-group>/providers/Microsoft.Cdn/profiles/<profile-name>/afdendpoints/<endpoint-name>" \
 --ttl 3600
 ```
 
@@ -363,9 +361,9 @@ az network dns record-set cname create \
 
 ```shell
 az aks show \
---subscription $ACQIO_PROD \
-  --resource-group prod-uswe2-general-k8s-rg \
-  --name prod-uswe2-general-k8s-aks \
+--subscription <subscription-id> \
+  --resource-group <resource-group> \
+  --name <aks-name> \
   --query "networkProfile.loadBalancerProfile.effectiveOutboundIPs[].id" -o tsv
 ```
 
