@@ -265,6 +265,6 @@ python main.py
 ```
 E esse foi o resultado:
 
-![[assets/Python_Diagrams-1.png]]
+[[image]]
 
 Como mencionado acima, o método utilizado neste exemplo não é imutável. O fato de ser personalizável por meio de código oferece uma enorme liberdade de personalização e automação.
