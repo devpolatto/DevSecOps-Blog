@@ -10,12 +10,12 @@ enableToc: true
 
 ```shell
 aws ec2 describe-images \
---profile acqio_dev \
+--profile <profile_id> \
 --filters "Name=architecture,Values=x86_64" "Name=name,Values=*ubuntu*20.04*"
 
 
 aws ec2 describe-images \
---profile acqio_dev \
+--profile <profile_id> \
 --owners "099720109477" \
 --filters \
 "Name=architecture,Values=x86_64" \
@@ -27,7 +27,7 @@ aws ec2 describe-images \
 ```shell
 aws s3api list-buckets --profile prod --regio us-east-1
 
-aws s3 cp main.py s3://acqio-dev-uswe2-emr/scripts/iccid/main.py --profile acqio_dev
+aws s3 cp main.py s3://busines-dev-uswe2-emr/scripts/iccid/main.py --profile <profile_id>
 
 aws s3api create-bucket --bucket "polattoVMTestCLI" --region us-west-1 --create-bucket-configuration LocationConstraint=us-west-1
 ```
@@ -35,9 +35,9 @@ aws s3api create-bucket --bucket "polattoVMTestCLI" --region us-west-1 --create-
 # SSM
 
 ```shell
-aws ssm put-parameter --name "/ElasticAPM/server_url" --value "https://bca3726952fc47cca8e48e9b43ab5b05.apm.westus2.azure.elastic-cloud.com:443" --type "String"
+aws ssm put-parameter --name "/ElasticAPM/server_url" --value "" --type "String"
 
-aws ssm put-parameter --name "/ElasticAPM/secret_token" --value "imV2qFBSzTTubYKDYA" --type "SecureString"
+aws ssm put-parameter --name "/ElasticAPM/secret_token" --value "" --type "SecureString"
 
 
 aws ssm get-parameters --names "/ElasticAPM/server_url" "/ElasticAPM/secret_token"
