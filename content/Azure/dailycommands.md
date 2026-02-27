@@ -81,7 +81,7 @@ az network vnet-gateway show \
 -o table
 
 az network vnet-gateway list \
-  --subscription $<subscription-id>_GATEWAY \
+  --subscription $<subscription-id  \
   --resource-group vpn-gateway \
   --query "[].ipConfigurations[].name" \
   -o table
@@ -91,7 +91,7 @@ az network vnet-gateway list \
 
 ```shell
 az network vpn-connection list \
---subscription $<subscription-id>_GATEWAY \
+--subscription $<subscription-id  \
 --resource-group vpn-gateway
 
 az network vpn-connection list \
@@ -108,7 +108,7 @@ az network vpn-connection show \
 -o table
 
 az network vpn-connection show \
-  --subscription $<subscription-id>_GATEWAY \
+  --subscription $<subscription-id  \
   --resource-group vpn-gateway \
   --name redsys_fs \
   --query "{Tunnel:tunnelConnectionStatus[0].tunnel, Status:connectionStatus, LocalSubnet:trafficSelectorPolicies[0].localAddressRanges[0], RemoteSubnet:trafficSelectorPolicies[0].remoteAddressRanges[0]}" \
@@ -159,7 +159,7 @@ az network vpn-connection update \
 
 ```shell
 az network local-gateway show \
-  --subscription $<subscription-id>_GATEWAY \
+  --subscription $<subscription-id  \
   --resource-group vpn-gateway \
   --name redsys_fs \
   --query "{RemoteGatewayIPAddress:gatewayIpAddress, RemoteSubnet:localNetworkAddressSpace.addressPrefixes}" \
@@ -179,18 +179,18 @@ az network local-gateway show \
 az network vnet-gateway get-routes-information \
 --subscription $<subscription-id> \
 --resource-group vpn-gateway \
---name prod-vpn-gateway
+--name <route-name>
 
 az network vnet-gateway list-advertised-routes \
 --subscription $<subscription-id> \
 --resource-group vpn-gateway \
---name prod-vpn-gateway \
+--name <resource_name> \
 --peer 10.254.254.4
 
 az network vnet-gateway list-learned-routes \
   --subscription $<subscription-id> \
   --resource-group vpn-gateway \
-  --name prod-vpn-gateway \
+  --name <resource_name> \
   --query "value[?network=='172.21.0.0/18' || network=='192.168.0.0/16'].
     {
       Network: network,
