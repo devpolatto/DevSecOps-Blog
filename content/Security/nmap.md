@@ -38,7 +38,7 @@ Se nenhum desses probes receber resposta (SYN/ACK, RST, ICMP reply, etc.), o Nma
      O `-Pn` instrui o Nmap a pular a fase de descoberta de host e assumir que todos os hosts estão ativos. Isso é útil quando sabemos que os hosts podem não responder a pings ou outros probes.
 
      ```bash
-     sudo nmap -Pn -sS -p 22 10.248.24.0/24
+     sudo nmap -Pn -sS -p 22 10.245.25.0/24
      ```
 
      O Nmap vai tentar o SYN scan na porta 22 em todos os 256 IPs, mesmo sem respostas iniciais.
@@ -48,7 +48,7 @@ Se nenhum desses probes receber resposta (SYN/ACK, RST, ICMP reply, etc.), o Nma
      Este método envia pacotes TCP SYN ou ACK para portas específicas, aumentando a chance de identificar hosts ativos que não respondem a ICMP. Basicamente, você pode definir uma ou mais portas para enviar os probes. Essa porta deve ser uma porta que provavelmente estará aberta nos hosts alvo. Se alguma dessas portas responder, o Nmap considerará o host como ativo e prosseguirá com scan.
 
      ```bash
-     sudo nmap -PS22,80,443,20001,20003 -PA22,80,443,20001,20003 -sS 10.248.24.0/24
+     sudo nmap -PS22,80,443,20001,20003 -PA22,80,443,20001,20003 -sS 10.245.25.0/24
      ```
 
 3. Usando `-PE`, `-PP`, `-PM` para enviar probes ICMP específicos.
@@ -56,7 +56,7 @@ Se nenhum desses probes receber resposta (SYN/ACK, RST, ICMP reply, etc.), o Nma
      Esses parâmetros permitem enviar diferentes tipos de pacotes ICMP para descobrir hosts. O `-PE` envia um Echo Request, o `-PP` envia um Timestamp Request e o `-PM` envia um Address Mask Request. Isso pode ajudar a identificar hosts que respondem a diferentes tipos de ICMP.
 
      ```bash
-     sudo nmap -PE -PP -PM -sS 10.248.24.0/24
+     sudo nmap -PE -PP -PM -sS 10.245.25.0/24
      ```
 
 Vamos salvar essa saída para análise posterior.
@@ -71,7 +71,7 @@ Segue um comando único:
 
 ```bash
 # Descobre hosts → filtra só os ativos → salva em arquivo
-sudo nmap -PS22,80,443,20001,20003 -PA22,80,443,20001,20003 -sS -p- 10.248.24.0/24 -oG - | awk '/Up/{print $2}' > alive-hosts.txt
+sudo nmap -PS22,80,443,20001,20003 -PA22,80,443,20001,20003 -sS -p- 10.245.25.0/24 -oG - | awk '/Up/{print $2}' > alive-hosts.txt
 ```
 
 ## Fase de Enumeração / Scanning detalhado
@@ -102,7 +102,7 @@ Essa fase é fundamental porque a qualidade da enumeração determina o sucesso 
 
      ```bash
      # output
-     Nmap scan report for 10.248.24.180
+     Nmap scan report for 10.245.25.180
      Host is up (0.072s latency).
 
      PORT      STATE    SERVICE        VERSION
@@ -114,7 +114,7 @@ Essa fase é fundamental porque a qualidade da enumeração determina o sucesso 
      20002/tcp filtered commtact-http
      20003/tcp filtered commtact-https
 
-     Nmap scan report for 10.248.24.181
+     Nmap scan report for 10.245.25.181
      Host is up (0.056s latency).
 
      PORT      STATE    SERVICE        VERSION
@@ -126,7 +126,7 @@ Essa fase é fundamental porque a qualidade da enumeração determina o sucesso 
      20002/tcp filtered commtact-http
      20003/tcp filtered commtact-https
 
-     Nmap scan report for 10.248.24.182
+     Nmap scan report for 10.245.25.182
      Host is up (0.10s latency).
 
      PORT      STATE    SERVICE        VERSION
@@ -138,7 +138,7 @@ Essa fase é fundamental porque a qualidade da enumeração determina o sucesso 
      20002/tcp filtered commtact-http
      20003/tcp filtered commtact-https
 
-     Nmap scan report for 10.248.24.199
+     Nmap scan report for 10.245.25.199
      Host is up (0.10s latency).
 
      PORT      STATE    SERVICE        VERSION
@@ -171,7 +171,7 @@ Essa fase é fundamental porque a qualidade da enumeração determina o sucesso 
 
      ```bash
      # output
-     Nmap scan report for 10.248.24.180
+     Nmap scan report for 10.245.25.180
      Host is up (0.086s latency).
      Not shown: 998 filtered tcp ports (no-response)
      PORT     STATE SERVICE
@@ -184,7 +184,7 @@ Essa fase é fundamental porque a qualidade da enumeração determina o sucesso 
      Aggressive OS guesses: Linux 4.15 - 5.8 (85%), Linux 5.0 (85%), Linux 5.0 - 5.4 (85%)
      No exact OS matches for host (test conditions non-ideal).
 
-     Nmap scan report for 10.248.24.181
+     Nmap scan report for 10.245.25.181
      Host is up (0.072s latency).
      Not shown: 998 filtered tcp ports (no-response)
      PORT     STATE SERVICE
@@ -197,7 +197,7 @@ Essa fase é fundamental porque a qualidade da enumeração determina o sucesso 
      Aggressive OS guesses: Linux 2.6.32 (85%), Linux 4.15 - 5.8 (85%), Linux 5.0 - 5.4 (85%)
      No exact OS matches for host (test conditions non-ideal).
 
-     Nmap scan report for 10.248.24.182
+     Nmap scan report for 10.245.25.182
      Host is up (0.094s latency).
      Not shown: 998 filtered tcp ports (no-response)
      PORT     STATE SERVICE
@@ -210,7 +210,7 @@ Essa fase é fundamental porque a qualidade da enumeração determina o sucesso 
      Aggressive OS guesses: Linux 2.6.32 (85%), Linux 4.15 - 5.8 (85%), Linux 5.0 - 5.4 (85%)
      No exact OS matches for host (test conditions non-ideal).
 
-     Nmap scan report for 10.248.24.199
+     Nmap scan report for 10.245.25.199
      Host is up (0.088s latency).
      Not shown: 998 filtered tcp ports (no-response)
      PORT      STATE SERVICE
@@ -263,13 +263,13 @@ Essa fase é fundamental porque a qualidade da enumeração determina o sucesso 
      1. Forçar scan com OS detection agressivo:
 
           ```bash
-          sudo nmap -Pn -O --osscan-guess -p 22,443,3001,3002 -T4 10.248.24.182 -oN os-all-ports.txt
+          sudo nmap -Pn -O --osscan-guess -p 22,443,3001,3002 -T4 10.245.25.182 -oN os-all-ports.txt
           ```
 
      2. Usar probes mais agressivas / diferentes
 
           ```bash
-          sudo nmap -Pn -O --osscan-limit --defeat-rst-ratelimit -p 22,443,3001,3002 10.248.24.182
+          sudo nmap -Pn -O --osscan-limit --defeat-rst-ratelimit -p 22,443,3001,3002 10.245.25.182
           ```
 
      Não desanime, se mesmo assim o Nmap não conseguir identificar o sistema operacional com precisão, é provável que o firewall esteja bloqueando muitos dos probes necessários para uma fingerprinting confiável. Nesse caso, pode ser necessário tentar outras abordagens, como análise manual de banners, ou até mesmo tentar obter acesso ao sistema para coletar informações diretamente.
@@ -296,12 +296,12 @@ Aqui está uma sequência lógica e prática que a maioria dos pentesters segue 
 1. Coletar informações básicas do banner e negociação (5 segundos)
 
      ```bash
-     nmap -sV --script=banner -p 22 10.248.24.182
+     nmap -sV --script=banner -p 22 10.245.25.182
      ```
 
      ```bash
      # output
-     Nmap scan report for 10.248.24.182
+     Nmap scan report for 10.245.25.182
      Host is up (0.037s latency).
 
      PORT   STATE SERVICE VERSION
@@ -315,49 +315,56 @@ Aqui está uma sequência lógica e prática que a maioria dos pentesters segue 
      ou use o Netcat para coletar o banner:
 
      ```bash
-     nc -v 10.248.24.182 22
+     nc -v 10.245.25.182 22
      ```
 
      ```bash
      # output
-     Connection to 10.248.24.182 22 port [tcp/ssh] succeeded!
+     Connection to 10.245.25.182 22 port [tcp/ssh] succeeded!
      SSH-2.0-OpenSSH_9.7
      ```
 
      ou use o próprio SSH client:
 
      ```bash
-     ssh -vvv -o PreferredAuthentications=no 10.248.24.182 -p 22
+     ssh -vvv -o PreferredAuthentications=no 10.245.25.182 -p 22
      ```
 
-     ```bash
-     # output
+     output
 
+     ```bash
      # O OpenSSH 9.6p1 Ubuntu-3ubuntu13.14 é uma versão corrigida que resolve várias vulnerabilidades de segurança, incluindo CVE-2024-6387
      OpenSSH_9.6p1 Ubuntu-3ubuntu13.14, OpenSSL 3.0.13 30 Jan 2024
-     ...
+     ```
+
+     ```
      Remote protocol version 2.0, remote software version OpenSSH_9.7
-     ...
+     ```
+
+     ```
      # Todos os algoritmos escolhidos são modernos e considerados seguros em 2025/2026. Não há algoritmos obsoletos ou fracos sendo oferecidos na negociação real.
      debug1: kex: algorithm: ecdh-sha2-nistp256
      debug1: kex: host key algorithm: ssh-ed25519
      debug1: kex: server->client cipher: chacha20-poly1305@openssh.com MAC: <implicit> compression: none
      debug1: kex: client->server cipher: chacha20-poly1305@openssh.com MAC: <implicit> compression: none
-     ...
+     ```
 
+     ```
      # Métodos de autenticação permitidos
      debug1: Authentications that can continue: publickey
      debug1: No more authentication methods to try.
-     ...
+     ```
 
+     ```
      # Banner / Mensagem pré-login
      Authorized uses only. All activity may be monitored and reported.
-     ...
-
-     # Host key: Usa Ed25519 (chave muito segura e moderna). Fingerprint SHA256 é o padrão atual (não SHA1)
-     Server host key: ssh-ed25519 SHA256:f5u0kvdKYXxo/Qdn0OjiIGb+MHMN4z50SF+Ng58cG7M
-     ...
      ```
+
+     ```
+     # Host key: Usa Ed25519 (chave muito segura e moderna). Fingerprint SHA256 é o padrão atual (não SHA1)
+     Server host key: ssh-ed25519 SHA256:*
+     ```
+
      Anote as informações coletadas:
           - Versão exata do OpenSSH (9.7)
           - Algoritmos de criptografia suportados
@@ -368,15 +375,15 @@ Aqui está uma sequência lógica e prática que a maioria dos pentesters segue 
      Existe várias formar de se explorar o SSH, como por exemplo:
 
      - Verificar se root login está permitido (teste passivo)
-          `ssh -v -l root 10.248.24.182`
+          `ssh -v -l root 10.245.25.182`
      - Scan Nmap com scripts SSH (opcional, mas recomendado)
-          `sudo nmap --script "ssh2-enum-algos,ssh-auth-methods,ssh-hostkey" -p 22 10.248.24.182`
+          `sudo nmap --script "ssh2-enum-algos,ssh-auth-methods,ssh-hostkey" -p 22 10.245.25.182`
      - Listar todos os algoritmos suportados (opcional)
 
           ```bash
-          ssh -Q kex 10.248.24.182
-          ssh -Q cipher 10.248.24.182
-          ssh -Q mac 10.248.24.182
+          ssh -Q kex 10.245.25.182
+          ssh -Q cipher 10.245.25.182
+          ssh -Q mac 10.245.25.182
           ```
 
      Com as informações coletadas, podemos pesquisar vulnerabilidades conhecidas associadas ao OpenSSH 9.6 e aos algoritmos suportados.
