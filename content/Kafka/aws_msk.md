@@ -12,27 +12,31 @@ Para instalar o Kafka CLI, siga os passos abaixo:
 
 1. Recupere a versão do kafka do seu cluster MSK:
 
+     Recupere o ARN do cluster MSK usando o comando `aws kafka list-clusters` e, em seguida, use o comando `aws kafka describe-cluster` para obter a versão do Kafka em execução no cluster. Substitua `<profile_name>` pelo nome do perfil AWS CLI que você está usando.
+
+     Case queira configurar o perfil AWS CLI, acesse [[Configurando ambiente para usar o AWS CLI com credenciais]]
+
      ```shell
-     CLUSTER_ARN="arn:aws:kafka:us-west-2:<AWS_ACCOUNT_ID>:cluster/global-uswe2-general-msk/5726670b6-****"
-     aws kafka describe-cluster \
+     CLUSTER_ARN=$(
+     aws kafka list-clusters \
      --profile <profile_name> \
      --region us-west-2 \
-     --cluster-arn $CLUSTER_ARN
-     ```
-     output:
-
-     ```shell
-     "CurrentBrokerSoftwareInfo": {
-          "ConfigurationArn": "arn:aws:kafka:us-west-2:<AWS_ACCOUNT_ID>:configuration/global-uswe2-general-msk/5726670b6-****",
-          "ConfigurationRevision": 1,
-          "KafkaVersion": "3.5.1"
-     },
+     --query 'ClusterInfoList[?State==`ACTIVE`].{ARN:ClusterArn}' \
+     --output tsv
+     )
      ```
 
-     Armazene a versão Kafka do seu cluster MSK na variável de ambiente, KAFKA_VERSION, conforme mostrado no comando a seguir. Você precisará dessas informações durante a configuração.
+     ```shell
+     KAFKA_VERSION=$(aws kafka describe-cluster \
+     --profile <profile_name> \
+     --region us-west-2 \
+     --cluster-arn $CLUSTER_ARN \
+     --query 'ClusterInfo.CurrentBrokerSoftwareInfo.KafkaVersion' \
+     --output text)
+     ```
 
      ```shell
-     export KAFKA_VERSION="3.5.1"
+     echo "Kafka version: $KAFKA_VERSION"
      ```
 
 2. Baixe e extraia o Apache Kafka.
