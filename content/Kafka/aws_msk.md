@@ -14,7 +14,7 @@ Para instalar o Kafka CLI, siga os passos abaixo:
 
      Recupere o ARN do cluster MSK usando o comando `aws kafka list-clusters` e, em seguida, use o comando `aws kafka describe-cluster` para obter a versão do Kafka em execução no cluster. Substitua `<profile_name>` pelo nome do perfil AWS CLI que você está usando.
 
-     Case queira configurar o perfil AWS CLI, acesse [[Configurando ambiente para usar o AWS CLI com credenciais]]
+     Case queira configurar o perfil AWS CLI, acesse [[aws_cli_credentials|Configurando ambiente para usar o AWS CLI com credenciais]]
 
      ```shell
      CLUSTER_ARN=$(
