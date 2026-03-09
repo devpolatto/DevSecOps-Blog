@@ -35,6 +35,36 @@ az network vnet subnet show \
   --name <subnet-name>
 ```
 
+## Network Security Group (NSG)
+
+```shell
+az network nsg rule list \
+--subscription <subscription-id> \
+--resource-group <resource-group> \
+--nsg-name <nsg-name> \
+--query "[].{Name:name,DestinationPortRange:destinationPortRange,destinationPortRanges:destinationPortRanges,direction:direction,protocol:protocol,sourceAddressPrefix:sourceAddressPrefix,sourceAddressPrefixes:sourceAddressPrefixes,access:access,destinationPortRange:destinationPortRange}" \
+--output json
+```
+
+```shell
+az network nsg rule create \
+  --subscription <subscription-id> \
+  --resource-group <resource-group> \
+  --nsg-name <nsg-name> \
+  --name Allow-Heartbeat-HealthCheck \
+  --priority 300 \
+  --direction Inbound \
+  --access Allow \
+  --protocol Tcp \
+  --source-address-prefixes <address-prefix> \
+  --source-port-range '*' \
+  --destination-address-prefixes '*' \
+  --destination-port-range 443 \
+  --description "Allow Heartbeat Health Check"
+```
+
+```shell
+
 ## Public IP
 
 ```shell
