@@ -4,6 +4,7 @@ tags:
   - Claude
   - Ollama
   - LLM
+  - AI
 enableToc: true
 ---
 
