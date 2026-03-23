@@ -33,23 +33,23 @@ Antes de começar, certifique-se de ter:
 
      ```conf
      input {
-          s3 {
-               access_key_id => "${AWS_ACCESS_KEY_ID}"
-               secret_access_key => "${AWS_SECRET_ACCESS_KEY}"
-               role_arn => "${AWS_ROLE_ARN}"                     # Se usar role assume, priorize isso (mais seguro)
-               bucket => "${AWS_BUCKET_NAME}"
-               region => "${AWS_REGION}"
-               prefix => "${AWS_BUCKET_PREFIX}"                  # Ex: "logstash/2026/01/19/" para um dia específico
-               codec => "json_lines"                             # Perfeito se forem arquivos .json com um evento por linha
-               temporary_directory => "/tmp/logstash/"
-               interval => 30                                    # Tempo entre polls (segundos)
-               watch_for_new_files => false                      # false = processa tudo uma vez e para (ideal para backfill histórico)
-               delete => false                                   # NÃO deleta nada do S3
-               sincedb_path => "/var/lib/logstash/sincedb_s3"    # Persista esse arquivo em volume Docker para evitar reprocessar
-               additional_settings => {
-                    "force_path_style" => false                     # Útil se bucket for path-style (raro hoje)
-               }
-          }
+      s3 {
+        access_key_id => "${AWS_ACCESS_KEY_ID}"
+        secret_access_key => "${AWS_SECRET_ACCESS_KEY}"
+        role_arn => "${AWS_ROLE_ARN}"                     # Se usar role assume, priorize isso (mais seguro)
+        bucket => "${AWS_BUCKET_NAME}"
+        region => "${AWS_REGION}"
+        prefix => "${AWS_BUCKET_PREFIX}"                  # Ex: "logstash/2026/01/19/" para um dia específico
+        codec => "json_lines"                             # Perfeito se forem arquivos .json com um evento por linha
+        temporary_directory => "/tmp/logstash/"
+        interval => 30                                    # Tempo entre polls (segundos)
+        watch_for_new_files => false                      # false = processa tudo uma vez e para (ideal para backfill histórico)
+        delete => false                                   # NÃO deleta nada do S3
+        sincedb_path => "/var/lib/logstash/sincedb_s3"    # Persista esse arquivo em volume Docker para evitar reprocessar
+        additional_settings => {
+            "force_path_style" => false                     # Útil se bucket for path-style (raro hoje)
+        }
+      }
      }
 
      filter {
@@ -58,20 +58,19 @@ Antes de começar, certifique-se de ter:
      }
 
      output {
-          elasticsearch {
-               hosts => [ "${ELASTIC_HOSTS}" ]                   # Verifique se é "htstp://elasticsearch:9200" ou URL completa
-               index => "hugo-alencar-paymenstrpc-logs"
-               user => "${ELASTIC_USER}"
-               password => "${ELASTIC_PASSWORD}"
-               document_id => "%{EventUUID}" # Se seus eventos tiverem um campo único, use aqui para evitar duplicatas
-               # Se for HTTPS: ssl => true, cacert => "/path/to/ca.crt" etc.
-          }
+        elasticsearch {
+          hosts => [ "${ELASTIC_HOSTS}" ]                   # Verifique se é "htstp://elasticsearch:9200" ou URL completa
+          index => "logs-%{+YYYY.MM.dd}"                     # Nome do índice, pode usar data para rotação
+          user => "${ELASTIC_USER}"
+          password => "${ELASTIC_PASSWORD}"
+          document_id => "%{EventUUID}" # Se seus eventos tiverem um campo único, use aqui para evitar duplicatas
+        }
 
      # Para debug, envie também para o console (opcional)
      stdout {
-          codec => rubydebug {
-               metadata => true
-          }
+      codec => rubydebug {
+        metadata => true
+      }
      }
      }
      ```
