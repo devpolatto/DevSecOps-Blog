@@ -22,7 +22,7 @@ Para instalar o Kafka CLI, siga os passos abaixo:
      --profile <profile_name> \
      --region us-west-2 \
      --query 'ClusterInfoList[?State==`ACTIVE`].{ARN:ClusterArn}' \
-     --output tsv
+     --output text
      )
      ```
 

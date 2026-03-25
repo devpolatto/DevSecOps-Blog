@@ -48,3 +48,10 @@ k exec -i -t -n marketing $pod -- sh -c "clear; (bash || ash || sh)"
 
 k exec -i -t -n marketing $pod -c nginx-ctn -- sh -c "clear; (bash || ash || sh)
 ```
+
+# Port forwarding
+
+```bash
+pod=$(kubectl get pod -n kafka | grep kafka-ui | grep -v NAME | awk '{print $1}') && \
+kubectl port-forward $pod 8080:8080 -n kafka
+```
