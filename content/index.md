@@ -5,6 +5,9 @@ description: DevSecOps e Cloud Architecture
 
 ![Avatar](https://ugc.production.linktr.ee/19948511-742d-4b1b-b7cf-b8d3b61be945_M-dia.jpeg?io=true&size=avatar-v3_0)
 
+[![](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/angelopolatto/)
+[![](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://x.com/Angelo_Polatto)
+
 ## DevSecOps & Cloud Architect
 
 Profissional de DevSecOps e Arquitetura em Nuvem com experiência em infraestrutura, automação e desenvolvimento de software, especializado em AWS. Proficiência em Infraestrutura como Código (IaC) usando AWS CDK com TypeScript, pipelines de CI/CD e automação com Python e Bash.
