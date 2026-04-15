@@ -258,6 +258,7 @@ output {
 ```
 
 # Como funcionam os Index Template
+
 ## Conceito
 
 **Index Templates** são aplicados **somente no momento da criação do índice**
