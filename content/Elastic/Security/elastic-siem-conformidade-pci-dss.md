@@ -10,6 +10,9 @@ tags:
 enableToc: true
 ---
 
+![[elasticsearch-logo.png]]
+
+
 # Como o Elastic SIEM Atende aos Requisitos Críticos do PCI-DSS
 
 > Um guia estratégico para justificar o investimento em Elastic SIEM demonstrando cobertura dos requisitos 7, 10, e 11 do PCI-DSS, com foco em redução de risco e custo operacional.
