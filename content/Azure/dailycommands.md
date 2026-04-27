@@ -87,6 +87,14 @@ az network public-ip show \
 --subscription <subscription-id> \
 --resource-group <resource-group> \
 --name <public-ip-name>
+
+az network public-ip create \
+  --resource-group <resource-group> \
+  --name <public-ip-name> \
+  --location <location> \
+  --sku <sku> \
+  --allocation-method <allocation-method> \
+  --version <version>
 ```
 
 # VPN Gateway
@@ -111,7 +119,7 @@ az network vnet-gateway show \
 -o table
 
 az network vnet-gateway list \
-  --subscription $<subscription-id  \
+  --subscription $<subscription-id> \
   --resource-group vpn-gateway \
   --query "[].ipConfigurations[].name" \
   -o table
@@ -121,7 +129,7 @@ az network vnet-gateway list \
 
 ```shell
 az network vpn-connection list \
---subscription $<subscription-id  \
+--subscription $<subscription-id> \
 --resource-group vpn-gateway
 
 az network vpn-connection list \

@@ -1,0 +1,133 @@
+# Stack: Product Manager
+
+> Para entender esta stack, leia `docs/ai/product-manager/README.md`
+> Gerado por `scripts/generate-ai-rules.sh` — não edite manualmente.
+> Para atualizar: `./scripts/generate-ai-rules.sh product-manager ./pm/`
+> Fonte: `docs/ai/`
+
+---
+
+## Roteamento por Momento da Iniciativa
+
+Antes de qualquer tarefa de produto, identifique em qual momento você está
+e leia a skill correspondente em `docs/ai/product-manager/`.
+
+| Você está fazendo | Skill a carregar |
+|---|---|
+| Preparar perguntas para entrevista com usuário ou stakeholder | `discovery.md` |
+| Conduzir ou sintetizar uma sessão de discovery | `discovery.md` |
+| Escrever user stories ou critérios de aceite | `requirements.md` |
+| Definir regras de negócio ou fluxos de erro | `requirements.md` |
+| Montar ou revisar um PRD | `prd.md` + `metrics.md` |
+| Preparar o PRD para aprovação de liderança | `prd.md` + `stakeholder-communication.md` |
+| Definir métricas de sucesso para uma iniciativa | `metrics.md` |
+| Interpretar resultados de A/B test ou dashboard | `metrics.md` |
+| Decidir o que entra na sprint ou no trimestre | `prioritization.md` |
+| Fazer backlog review | `prioritization.md` |
+| Redigir update semanal para stakeholders | `stakeholder-communication.md` |
+| Comunicar mudança de escopo ou atraso | `stakeholder-communication.md` |
+| Redigir comunicado de incidente em produção | `stakeholder-communication.md` |
+| Revisar se uma iniciativa está pronta para o kick-off | todas as skills — checklist cruzado |
+
+## Fluxo entre Skills
+
+```
+Problema identificado
+        │
+        ▼
+   discovery.md        ← ponto de entrada obrigatório
+        │
+        ▼
+  requirements.md      ← transforma problema em comportamentos esperados
+        │
+        ▼
+      prd.md           ← consolida tudo em contrato compartilhado
+        │
+        ├──────────────────────────┐
+        ▼                          ▼
+    metrics.md          prioritization.md
+  (define sucesso)      (decide o que entra)
+        │                          │
+        └──────────┬───────────────┘
+                   ▼
+    stakeholder-communication.md
+         (permeia todo o fluxo)
+```
+
+Para entender como cada skill alimenta a próxima, leia `docs/ai/product-manager/README.md`.
+
+## Os Três Artefatos Essenciais
+
+1. **Síntese de Discovery** — por que estamos fazendo isso (template em `discovery.md`)
+2. **PRD** — o que estamos fazendo e o que define sucesso (estrutura em `prd.md`)
+3. **Decision Log** — por que decidimos o que decidimos (template em `stakeholder-communication.md`)
+
+---
+
+# Comportamento
+
+## Respostas
+
+- Respostas diretas — sem introduções nem recapitular o que foi pedido
+- Sem frases de encerramento: "Espero que ajude!", "Me avise se precisar de mais alguma coisa", etc.
+- Se a resposta é código, entregue o código — sem descrever o que vai fazer antes de fazer
+- Explicações somente quando explicitamente pedidas ou quando há decisão não óbvia
+- Sem resumo no final do que foi implementado — o código se explica
+- Dúvida genuína: uma pergunta objetiva — nunca lista de possibilidades para o usuário resolver
+
+## Output em Tarefas Autônomas
+
+- Entregue o resultado — sem preâmbulo descrevendo o que será feito
+- Sem confirmações desnecessárias: "Claro!", "Ótima pergunta!", "Entendido!"
+- Diff ou arquivo completo conforme o contexto — nunca os dois
+- Ambiguidade bloqueante: uma pergunta direta — não liste todas as interpretações possíveis
+- Erros encontrados: aponte o problema e a correção, sem drama
+
+
+---
+
+# Git Workflow — Acqio
+
+## Branches
+
+| Tipo | Padrão | Exemplo |
+|---|---|---|
+| Feature | `feat/<ticket>-descricao` | `feat/PAY-123-adicionar-validacao-cpf` |
+| Correção | `fix/<ticket>-descricao` | `fix/PAY-456-corrigir-timeout-grpc` |
+| Manutenção | `chore/<ticket>-descricao` | `chore/PAY-789-atualizar-acqio-commons` |
+
+- Branch base: `main`
+- Um PR por mudança lógica — não agrupe features com refatorações
+
+## Commits
+
+Seguir [Conventional Commits](https://www.conventionalcommits.org/):
+
+```
+feat(payment): adicionar validação de CPF no checkout
+fix(grpc): corrigir timeout em chamadas ao serviço de fraude
+chore(deps): atualizar acqio-commons para 2.3.1
+docs(ai): atualizar convenções de testes
+refactor(service): extrair lógica de retry para PaymentRetryService
+test(payment): adicionar cenário de saldo insuficiente
+```
+
+- Um commit por mudança lógica
+- Mensagem no imperativo e em português
+- Escopo entre parênteses quando aplicável
+
+## Pull Requests
+
+- Título segue o mesmo padrão do commit principal
+- Descrição: o quê mudou e por quê — não como
+- PRs pequenos e focados: prefira múltiplos PRs a um PR gigante
+- Nunca abra PR sem o gate de qualidade passando localmente
+
+## O que Nunca Commitar
+
+- Credenciais, secrets, tokens ou chaves de API
+- Arquivos `.env` com valores reais
+- Connection strings com usuário/senha
+- Binários gerados pelo build
+- Arquivos de IDE (`.idea/`, `.vscode/`) — use `.gitignore`
+

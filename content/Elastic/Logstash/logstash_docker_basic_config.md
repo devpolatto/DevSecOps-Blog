@@ -2,6 +2,7 @@
 title: Básico de Configuração do Logstash no Docker
 tags:
   - Logstash
+  - Docker
 enableToc: true
 ---
 
